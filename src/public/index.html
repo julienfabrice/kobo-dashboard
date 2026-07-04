@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard KoBo</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+  <h1>📊 Dashboard KoBo</h1>
+
+  <select id="forms"></select>
+
+<button onclick="syncData()">Sync</button>
+<button onclick="loadData()">Charger données</button>
+
+<div id="status"></div>
+
+<table border="1">
+  <thead>
+    <tr id="tableHead"></tr>
+  </thead>
+  <tbody id="tableBody"></tbody>
+</table>
+  <h3>📊 Statistiques</h3>
+<canvas id="chart"></canvas>
+  <script src="app.js"></script>
+</body>
+</html>
