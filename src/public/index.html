@@ -1,28 +1,72 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-  <title>Dashboard KoBo</title>
+  <meta charset="UTF-8">
+  <title>Kobo Field Ops — Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-
 <body>
-  <h1>📊 Dashboard KoBo</h1>
 
-  <select id="forms"></select>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">RT</span>
+      <div>
+        <h1>Kobo Field Ops</h1>
+        <p class="subtitle">Suivi des formulaires &amp; collecte terrain</p>
+      </div>
+    </div>
 
-<button onclick="syncData()">Sync</button>
-<button onclick="loadData()">Charger données</button>
+    <div class="controls">
+      <select id="forms" aria-label="Choisir un formulaire"></select>
+      <button id="syncBtn" class="btn btn-ghost">↻ Synchroniser</button>
+      <button id="loadBtn" class="btn btn-primary">Charger les données</button>
+    </div>
+  </header>
 
-<div id="status"></div>
+  <main>
+    <section id="app" class="grid">
+      <p class="empty-state">Chargement des formulaires…</p>
+    </section>
 
-<table border="1">
-  <thead>
-    <tr id="tableHead"></tr>
-  </thead>
-  <tbody id="tableBody"></tbody>
-</table>
-  <h3>📊 Statistiques</h3>
-<canvas id="chart"></canvas>
-  <script src="app.js"></script>
+    <section id="dataPanel" class="data-panel hidden">
+      <div class="data-panel-header">
+        <div>
+          <p class="eyebrow">Formulaire sélectionné</p>
+          <h2 id="dataPanelTitle">—</h2>
+        </div>
+        <button id="closePanel" class="btn btn-ghost btn-sm">Fermer ✕</button>
+      </div>
+
+      <div class="stats-row" id="statsRow"></div>
+
+      <div class="charts-grid">
+        <div class="chart-wrap">
+          <p class="chart-label">Soumissions dans le temps</p>
+          <canvas id="chart" height="90"></canvas>
+        </div>
+        <div class="chart-wrap">
+          <div class="chart-label-row">
+            <label for="fieldSelect">Analyser le champ</label>
+            <select id="fieldSelect"></select>
+          </div>
+          <canvas id="fieldChart" height="90"></canvas>
+          <p class="empty-state" id="fieldChartEmpty" style="display:none;">Aucun champ analysable trouvé dans ce formulaire.</p>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr id="tableHead"></tr></thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
 </body>
 </html>
