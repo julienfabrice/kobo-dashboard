@@ -150,14 +150,25 @@ function renderTable(data) {
     return;
   }
 
-  // On garde les colonnes les plus lisibles, on écarte les champs internes trop verbeux
-  const skip = new Set(["_geolocation", "_attachments", "_notes", "_tags", "_validation_status"]);
-  const columns = Object.keys(data[0]).filter(k => !skip.has(k)).slice(0, 8);
+  // On ignore les métadonnées système Kobo, on ne garde que les vraies réponses
+  const allKeys = Object.keys(data[0]).filter(k => !META_FIELDS.has(k));
 
-  head.innerHTML = columns.map(c => `<th>${escapeHtml(c)}</th>`).join("");
+  // On priorise les champs de type "section_x/..." (les vraies questions du formulaire)
+  const realFields = allKeys.filter(k => /^sec?x?tion_\d+\//i.test(k));
+  const otherFields = allKeys.filter(k => !/^sec?x?tion_\d+\//i.test(k));
+
+  const columns = [...realFields, ...otherFields].slice(0, 10);
+
+  head.innerHTML = columns.map(c => `<th>${escapeHtml(formatFieldLabel(c))}</th>`).join("");
   body.innerHTML = data.map(row => `
     <tr>${columns.map(c => `<td>${escapeHtml(formatCell(row[c]))}</td>`).join("")}</tr>
   `).join("");
+}
+
+// Rend un nom de champ plus lisible : "section_1/nom_structure" -> "nom structure"
+function formatFieldLabel(key) {
+  const lastPart = key.split("/").pop();
+  return lastPart.replace(/_/g, " ");
 }
 
 function formatCell(value) {
