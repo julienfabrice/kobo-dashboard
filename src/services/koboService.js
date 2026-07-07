@@ -33,7 +33,9 @@ async function getStoredSubmissions(assetUid) {
     "SELECT data FROM kobo_submissions WHERE asset_uid = ? ORDER BY submission_id",
     [assetUid]
   );
-  return rows.map(row => JSON.parse(row.data));
+  return rows.map(row =>
+  typeof row.data === "string" ? JSON.parse(row.data) : row.data
+);
 }
 
 // Enregistrer les réponses KoBo dans MySQL
