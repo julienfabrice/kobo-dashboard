@@ -7,7 +7,8 @@ let currentSubmissions = [];
 const META_FIELDS = new Set([
   "_id", "_uuid", "_submission_time", "_validation_status", "_notes", "_status",
   "_submitted_by", "_tags", "_geolocation", "_attachments", "_xform_id_string",
-  "__version__", "_version_", "meta/instanceID", "formhub/uuid", "start", "end"
+  "__version__", "_version_", "meta/instanceID", "formhub/uuid", "start", "end",
+  "meta/rootUuid"
 ]);
 
 // Couleurs de la barre latérale des cards, assignées en tournant sur la liste
